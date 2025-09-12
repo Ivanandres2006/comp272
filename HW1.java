@@ -104,14 +104,7 @@ public class HW1 {
                 while (head != null && head.data == value) {
                     head = head.next;
                 }
-                Node current = head;
-                while (current != null && current.next != null) {
-                    if (current.next.data == value) {
-                        current.next = current.next.next;
-                    } else {
-                        current = current.next;
-                    }
-                }
+                
                 return;
             }
 
@@ -175,9 +168,7 @@ public class HW1 {
                 for (int i = 0; i < input.length(); i++) {
                     stack.push(input.charAt(i));
                 }
-
-               //poping characters
-
+                
                 for (int i = 0; i < input.length(); i++) {
                     if (input.charAt(i) != stack.pop()) {
                         return false;
