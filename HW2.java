@@ -1,7 +1,7 @@
 
 
 /*
- * *** PLACE YOUR NAME / SECTION HERE ***
+ * *** Ivan Madriz / Comp 272 Section 002 ***
  *
  * Homework # 2 (Programming Assignment). This Java class defines a few basic
  * manipulation operations of a binary trees.
@@ -222,9 +222,15 @@ public class BinaryTree {
      */
 
     private void replaceValueHelper(Node node, int oldVal, int newVal) {
-
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
+        if (node == null) {
+            return;
+        }
+        if (node.data == oldVal) {
+            node.data = newVal;
+        }
+        
+        replaceValueHelper(node.left, oldVal, newVal);
+        replaceValueHelper(node.right, oldVal, newVal);
 
     }
 
@@ -247,8 +253,14 @@ public class BinaryTree {
 
         // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
         // BINARY TREE (WHICH IS BASED ON RECURSION)
+        if (node == null){
+            return Integer.MAX_VALUE;
+        }
 
-        return Integer.MAX_VALUE;
+        int leftMin = findMinHelper(node.left);
+        int rightMin = findMinHelper(node.right);
+        int m = Math.min(node.data, leftMin);
+        return Math.min(m, rightMin);
     }
 
 
@@ -266,14 +278,15 @@ public class BinaryTree {
      */
 
     private int nodesGTHelper(Node node, int val) {
+        if (node == null) {
+            return 0;
+        }
+        
+        int countHere = (node.data > val) ? 1 : 0;
+        int leftCount = nodesGTHelper(node.left, val);
+        int rightCount = nodesGTHelper(node.right, val);
+        return countHere + leftCount + rightCount;
 
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
-
-        // RETURNING -1 IN THIS STUB, WHICH WILL FAIL ALL TESTS. REPLACE IT WITH YOUR CODE
-
-
-        return -1;
     }
 
 
@@ -304,14 +317,14 @@ public class BinaryTree {
     }
 
     private int[] averageHelper(Node n) {
-
-        // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
-        // BINARY TREE (WHICH IS BASED ON RECURSION)
-
-        // RECALL, IF THE TREE IS EMPTY, RETURN 0 FOR BOTH THE SUM AND
-        // COUNT LOCATIONS IN THE RETURNED ARRAY AS SHOWN BELOW, ELSE
-        // THE 'SUM' IS RETURNED IN INDEX LOCATION 0, AND COUNT IS LOCATION 1
-
-        return new int[]{0, 0};
+        if (n == null) {
+            return new int[]{0, 0}; // sum=0, count=0 for empty
+        }
+        
+        int[] L = averageHelper(n.left);
+        int[] R = averageHelper(n.right);
+        int sum = L[0] + R[0] + n.data;
+        int cnt = L[1] + R[1] + 1;
+        return new int[]{sum, cnt};
     }
 }
